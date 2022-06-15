@@ -22,5 +22,5 @@ app.use("/",require('./routes/home'));
 app.use("/auth",require('./routes/auth'));
 app.use(express.static(__dirname + "/public"));
 
-
-app.listen(5000, ()=>console.log('Servidor encendido'));
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, ()=>console.log("Servidor encendido "));

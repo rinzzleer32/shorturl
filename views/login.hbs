@@ -1,1 +1,16 @@
-<h1>saludos desde login</h1>
+
+
+<h1 class="text-center my-5">Login de usuarios</h1>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <form action="/auth/login" method="post">
+    
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+    <input type="text" name="email" class="form-control mb-2" placeholder="Ingrese el email">
+
+    <input type="password" name="pass" class="form-control mb-2" placeholder="Ingrese el password">
+
+    <button class="btn btn-primary" type="submit">Acceder</button>
+</form>
+    </div>
+</div>

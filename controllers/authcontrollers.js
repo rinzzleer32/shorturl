@@ -43,7 +43,7 @@ const registerUser = async(req,res) =>{
             to: user.email, // list of receivers
             subject: "Verificacion de la cuenta en url shortner", // Subject line
            
-            html: `<a href="http://localhost:5000/auth/confirmar/${user.tokenConfirm}">Verifica tu cuenta aqui</a>`, // html body
+            html: `<a href="${ PathHeroku ||'http://localhost:5000'}/auth/confirmar/${user.tokenConfirm}">Verifica tu cuenta aqui</a>`, // html body
           });
         req.flash("mensajes",[{msg:"revisa tu correo electronico para validar tu cuenta"}]);
         res.redirect('/auth/login');

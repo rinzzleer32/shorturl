@@ -5,18 +5,31 @@ const express = require('express');
 const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport');
+const MongoSanitize = require('express-mongo-sanitize');
 const User = require("./models/User");
 const csrf = require('csurf');
+const MongoStore = require('connect-mongo');
 require('dotenv').config();
-require('./database/conec');
+const clientDb = require('./database/conec')
+const cors = require("cors")
 const app = express();
 const formidable = require('formidable');
-
+const corsOption ={
+    credentials : true,
+   origin: process.env.PathHeroku || "*",
+   methods: ['GET','POST']
+};
+app.use(cors());
 app.use(session({
-    secret:'beat it',
+    secret: process.env.Secretsesion,
     resave: false,
     saveUninitialized: true,
     name: "Skidush",
+    store: MongoStore.create({
+        clientPromise: clientDb,
+        dbName: process.env.dbname,
+    }), 
+    cookie: {secure: process.env.mode === 'production', maxAge:30*24*60*60*1000},
 }))
 
 app.use(flash());
@@ -48,6 +61,7 @@ app.use(express.text({extended: true}));
 
 
 app.use(csrf());
+app.use(MongoSanitize());
 app.use((req,res,next)=>{
     res.locals.csrfToken = req.csrfToken();
     res.locals.mensajes = req.flash("mensajes");
